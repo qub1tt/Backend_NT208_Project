@@ -185,7 +185,7 @@ exports.getBookByPublisher = async (req, res) => {
   try {
     let query = {
       name: new RegExp(searchText, "i"),
-      id_nsx: id,
+        _nsx: id,
     };
     if (range !== null) {
       query.price = { $gte: objRange.low, $lte: objRange.high };
