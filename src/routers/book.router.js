@@ -6,7 +6,8 @@ module.exports = (app) => {
 
     app.route('/book/allbook')
         .post(book_controller.getAllBook);
-
+    app.route('/book/')
+        .get(book_controller.getBook)
     app.route('/book/publisher')
         .post(book_controller.getBookByPublisher);
 

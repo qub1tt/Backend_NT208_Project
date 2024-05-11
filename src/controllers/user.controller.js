@@ -34,6 +34,13 @@ exports.register = async (req, res) => {
       return res.status(409).json({ msg: "Email already exists" });
     }
 
+    const token = randomstring.generate();
+    let sendEmail = await nodemailer.sendEmail(email, token);
+    if (!sendEmail) {
+      res.status(500).json({ msg: "Send email fail" });
+      return;
+    }
+
     // Mã hóa mật khẩu
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -45,6 +52,7 @@ exports.register = async (req, res) => {
       password: hashedPassword,
       address: address,
       phone_number: phone_number,
+      token: token,
     });
 
     // Lưu người dùng vào cơ sở dữ liệu
@@ -164,11 +172,11 @@ exports.requestForgotPassword = async (req, res) => {
     // Tạo mã OTP mới
     const token = otp.generateOTP();
 
-    // Gửi email chứa mã OTP (đã được bỏ comment)
-    // let sendEmail = await nodemailer.sendEmailForgotPassword(email, token);
-    // if (!sendEmail) {
-    //   return res.status(500).json({ msg: "Send email fail" });
-    // }
+    // Gửi email chứa mã OTP 
+    let sendEmail = await nodemailer.sendEmailForgotPassword(email, token);
+    if (!sendEmail) {
+      return res.status(500).json({ msg: "Send email fail" });
+    }
 
     // Lưu mã OTP vào tài khoản người dùng
     userFind.token = token;

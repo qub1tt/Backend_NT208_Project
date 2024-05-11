@@ -4,6 +4,16 @@ const publisherController = require("../controllers/publisher.controller");
 const authorController = require("../controllers/author.controller");
 const categoryController = require("../controllers/category.controller");
 
+exports.getBook = async (req, res) => {
+  try {
+    const docs = await book.find({});
+    res.status(200).json({ data: docs });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: err });
+  }
+};
+
 exports.getTotalPage = async (req, res) => {
   try {
     const docs = await book.find({});
@@ -185,7 +195,7 @@ exports.getBookByPublisher = async (req, res) => {
   try {
     let query = {
       name: new RegExp(searchText, "i"),
-        _nsx: id,
+      _nsx: id,
     };
     if (range !== null) {
       query.price = { $gte: objRange.low, $lte: objRange.high };
