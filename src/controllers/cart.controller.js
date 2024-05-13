@@ -47,8 +47,8 @@ exports.addToCart = async (req, res) => {
     if (index === -1) {
       cartFind.products.push(products[i]);
     } else {
-      cartFind.products[index].count += Number(products[i].count);
-    }
+        cartFind.products[index].count += Number(products[i].count);
+      }
   }
 
   try {

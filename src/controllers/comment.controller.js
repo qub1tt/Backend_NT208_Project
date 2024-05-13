@@ -3,9 +3,8 @@ const _comment = require("../models/comment.model");
 const book = require("../models/book.model");
 
 exports.mycomment = async (req, res) => {
+  const { id_user, id_book, name, comment } = req.body;
   try {
-    const { id_user, id_book, name, comment } = req.body;
-
     // Check if required fields are present
     if (!id_user || !id_book || !name || !comment) {
       return res.status(422).json({ msg: "Invalid data" });
@@ -35,7 +34,7 @@ exports.mycomment = async (req, res) => {
   }
 };
 
-exports.getCommentByIDBook = async (req, res) => {
+exports.getCommentByIDBook = async (req, res) => { 
   try {
     const { id_book, page } = req.body;
 

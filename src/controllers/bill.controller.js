@@ -9,13 +9,12 @@ exports.addBill = async (req, res) => {
     typeof req.body.address === "undefined" ||
     typeof req.body.phone === "undefined" ||
     typeof req.body.name === "undefined" ||
-    typeof req.body.total === "undefined" ||
-    typeof req.body.email === "undefined"
+    typeof req.body.total === "undefined"
   ) {
     res.status(422).json({ msg: "Invalid data" });
     return;
   }
-  const { id_user, address, total, phone, name, email } = req.body;
+  const { id_user, email, address, phone, name, total } = req.body;
   var cartFind = null;
   try {
     cartFind = await cart.findOne({ id_user: id_user });
@@ -29,11 +28,7 @@ exports.addBill = async (req, res) => {
     return;
   }
   const token = randomstring.generate();
-  // let sendEmail = await nodemailer.sendMailConfirmPayment(email, token);
-  // if (!sendEmail) {
-  //   res.status(500).json({ msg: "Send email fail" });
-  //   return;
-  // }
+
   const new_bill = new bill({
     id_user: id_user,
     products: cartFind.products,
@@ -44,17 +39,24 @@ exports.addBill = async (req, res) => {
     token,
   });
   try {
-    await cartFind.remove();
+    await cart.deleteOne({ id_user: id_user });
   } catch (err) {
     res.status(500).json({ msg: err });
-    console.log("cart remove fail");
+    console.log(err);
     return;
   }
+
   try {
     new_bill.save();
   } catch (err) {
     res.status(500).json({ msg: err });
     console.log("save bill fail");
+    return;
+  }
+  console.log(email);
+  let sendEmail = await nodemailer.sendMailConfirmPayment(email, token);
+  if (!sendEmail) {
+    res.status(500).json({ msg: "Send email fail" });
     return;
   }
   res.status(201).json({ msg: "success" });
@@ -80,8 +82,8 @@ exports.verifyPayment = async (req, res) => {
   try {
     await bill.findByIdAndUpdate(
       tokenFind._id,
-      { $set: { issend: "99" } },
-      { new: "99" }
+      { $set: { issend: "0" } },
+      { new: "0" }
     );
   } catch (err) {
     res.status(500).json({ msg: err });
@@ -114,25 +116,15 @@ exports.deleteBill = async (req, res) => {
     res.status(402).json({ msg: "data invalid" });
     return;
   }
-  let billFind = null;
+
   try {
-    billFind = await bill.findOne({ _id: req.params.id, issend: "99" });
+    await bill.deleteOne({ _id: req.params.id, issend: "99" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: "server found" });
     return;
   }
-  if (billFind === null) {
-    res.status(400).json({ msg: "invalid" });
-    return;
-  }
-  try {
-    billFind.remove();
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: "server found" });
-    return;
-  }
+
   res.status(200).json({ msg: "success" });
 };
 exports.statisticalTop10 = async (req, res) => {
