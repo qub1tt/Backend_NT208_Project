@@ -12,6 +12,7 @@ const bookRouter = require("./routers/book.router");
 const authorRouter = require("./routers/author.router");
 const commentRouter = require("./routers/comment.router");
 const billRouter = require("./routers/bill.router");
+const adminRouter = require("./routers/admin.router");
 const cartRouter = require("./routers/cart.router");
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -41,7 +42,7 @@ authorRouter(app);
 commentRouter(app);
 billRouter(app);
 cartRouter(app);
-
+adminRouter(app);
 app.get("/", (req, res) => {
   res.send("welcome to Book_store");
 });

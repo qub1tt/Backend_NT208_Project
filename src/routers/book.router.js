@@ -1,25 +1,19 @@
-'use strict'
-const book_controller = require('../controllers/book.controller');
+"use strict";
+const book_controller = require("../controllers/book.controller");
 module.exports = (app) => {
-    app.route('/book/totalpage')
-        .get(book_controller.getTotalPage);
+  app.route("/book/totalpage").get(book_controller.getTotalPage);
 
-    app.route('/book/allbook')
-        .post(book_controller.getAllBook);
-    app.route('/book/')
-        .get(book_controller.getBook)
-    app.route('/book/publisher')
-        .post(book_controller.getBookByPublisher);
+  app.route("/book/allbook").post(book_controller.getAllBook);
 
-    app.route('/book/category')
-        .post(book_controller.getBookByCategory);
+  app.route("/book/").get(book_controller.getBook);
 
-    app.route('/book/author')
-        .post(book_controller.getBookByAuthor);
+  app.route("/book/publisher").post(book_controller.getBookByPublisher);
 
-    app.route('/book/:id')
-        .get(book_controller.getBookByID)
+  app.route("/book/category").post(book_controller.getBookByCategory);
 
-    app.route('/book/related/:bookId')
-        .get(book_controller.getRelatedBook)
-}
+  app.route("/book/author").post(book_controller.getBookByAuthor);
+
+  app.route("/book/:id").get(book_controller.getBookByID);
+
+  app.route("/book/related/:bookId").get(book_controller.getRelatedBook);
+};
