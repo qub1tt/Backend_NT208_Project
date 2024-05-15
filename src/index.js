@@ -14,6 +14,7 @@ const commentRouter = require("./routers/comment.router");
 const billRouter = require("./routers/bill.router");
 const adminRouter = require("./routers/admin.router");
 const cartRouter = require("./routers/cart.router");
+const chatBotRouter = require("./routers/chatbot.router");
 mongoose.Promise = global.Promise;
 mongoose.connect(
   "mongodb+srv://clonenick169:w80czikIFiNybzwu@bookstore.kfmtois.mongodb.net/",
@@ -43,6 +44,7 @@ commentRouter(app);
 billRouter(app);
 cartRouter(app);
 adminRouter(app);
+chatBotRouter(app);
 app.get("/", (req, res) => {
   res.send("welcome to Book_store");
 });
