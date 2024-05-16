@@ -261,15 +261,17 @@ exports.deleteUser = async (req, res) => {
     res.status(422).json({ msg: "Invalid data" });
     return;
   }
-  let userFind;
+
   try {
-    userFind = await user.findOne({ email: req.body.email });
+    const deletedUser = await user.findOneAndDelete({ email: req.body.email });
+    if (!deletedUser) {
+      res.status(404).json({ msg: "User not found" });
+      return;
+    }
+    res.status(200).json({ msg: "success" });
   } catch (err) {
-    res.status(500).json({ msg: err });
-    return;
+    res.status(500).json({ msg: err.message });
   }
-  userFind.remove();
-  res.status(200).json({ msg: "success" });
 };
 
 exports.addCategory = async (req, res) => {
