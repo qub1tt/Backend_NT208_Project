@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
 
 exports.sendEmail = async (email, token) => {
   let mailOptions = {
-    from: '"SHOOPER 👻" <clonenick169@gmail.com>', // sender address
+    from: '"BOOK SHOP" <clonenick169@gmail.com>', // sender address
     to: email, // list of receivers
     subject: "Account Verification Token", // Subject line
     text: "Hello my friend",
@@ -33,7 +33,7 @@ exports.sendEmail = async (email, token) => {
 
 exports.sendEmailForgotPassword = async (email, token) => {
   let mailOptions = {
-    from: '"SHOOPER 👻" <clonenick169@gmail.com>', // sender address
+    from: '"BOOK SHOP" <clonenick169@gmail.com>', // sender address
     to: email, // list of receivers
     subject: "Forgot password Verification Token", // Subject line
     html:
@@ -55,7 +55,7 @@ exports.sendEmailForgotPassword = async (email, token) => {
 };
 exports.sendMailConfirmPayment = async (email, token) => {
   let mailOptions = {
-    from: '"SHOOPER 👻" <clonenick169@gmail.com>', // sender address
+    from: '"BOOK SHOP" <clonenick169@gmail.com>', // sender address
     to: email, // list of receivers
     subject: "Payment Verification Token", // Subject line
     text: "Hello my friend",
