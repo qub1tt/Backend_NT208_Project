@@ -7,5 +7,5 @@ module.exports = (app) => {
         .get(category_controller.getAll);
     app.route('/category/name/:id')
         .get(category_controller.getNameByID)   
-        
+
 }

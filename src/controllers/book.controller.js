@@ -317,7 +317,8 @@ exports.getBookByID = async (req, res) => {
     return;
   }
   try {
-    let result = await book.findById(req.params.id);
+    const encodedID = atob(req.params.id);
+    let result = await book.findById(encodedID);
     if (!result) {
       res.status(404).json({ msg: "Not found" });
       return;
@@ -331,49 +332,3 @@ exports.getBookByID = async (req, res) => {
   }
 };
 
-exports.getRelatedBook = async (req, res) => {
-  if (typeof req.params.bookId === "undefined") {
-    res.status(422).json({ msg: "Invalid data" });
-    return;
-  }
-  const { bookId } = req.params;
-  let bookObj = null;
-  try {
-    bookObj = await book.findById(bookId);
-    if (!bookObj) {
-      res.status(404).json({ msg: "Book not found" });
-      return;
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: err });
-    return;
-  }
-
-  try {
-    const relatedBooks = await book
-      .find({
-        $or: [
-          {
-            $and: [
-              { id_category: bookObj.id_category },
-              { _id: { $nin: [bookId] } },
-            ],
-          },
-          {
-            $and: [
-              { id_author: bookObj.id_author },
-              { _id: { $nin: [bookId] } },
-            ],
-          },
-        ],
-      })
-      .limit(5)
-      .sort({ release_date: -1 });
-
-    res.status(200).json({ data: relatedBooks });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: err });
-  }
-};
