@@ -5,6 +5,7 @@ const randomstring = require("randomstring");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const otp = require("../utils/otp");
+const { cloudinary } = require("../utils/cloudinary");
 
 exports.register = async (req, res) => {
   try {
@@ -142,6 +143,8 @@ exports.login = async (req, res) => {
         address: userFind.address,
         phone_number: userFind.phone_number,
         id: userFind._id,
+        id_avatar: userFind.id_avatar,
+        avatar_url: userFind.avatar_url,
       },
     });
   } catch (err) {
@@ -172,7 +175,7 @@ exports.requestForgotPassword = async (req, res) => {
     // Tạo mã OTP mới
     const token = otp.generateOTP();
 
-    // Gửi email chứa mã OTP 
+    // Gửi email chứa mã OTP
     let sendEmail = await nodemailer.sendEmailForgotPassword(email, token);
     if (!sendEmail) {
       return res.status(500).json({ msg: "Send email fail" });
@@ -251,7 +254,8 @@ exports.forgotPassword = async (req, res) => {
 exports.updateInfor = async (req, res) => {
   try {
     // Kiểm tra xem các trường thông tin đã được cung cấp chưa
-    const { email, firstName, lastName, address, phone_number } = req.body;
+    const { email, firstName, lastName, address, phone_number, avatarBase64 } =
+      req.body;
     if (!email || !firstName || !lastName || !address || !phone_number) {
       return res.status(422).json({ msg: "Invalid data" });
     }
@@ -267,6 +271,27 @@ exports.updateInfor = async (req, res) => {
     userFind.lastName = lastName;
     userFind.address = address;
     userFind.phone_number = phone_number;
+
+    // Kiểm tra và upload ảnh avatar nếu có
+    if (avatarBase64) {
+      // 'avatar' là base64 string từ req.body
+      // Hủy avatar cũ nếu có
+      if (userFind.id_avatar) {
+        await cloudinary.uploader.destroy(
+          userFind.id_avatar,
+          function (error, result) {
+            console.log(result, error);
+          }
+        );
+      }
+      const fileStr = req.body.avatarBase64;
+      const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+        upload_preset: "user_ava", // Tùy chọn preset upload của bạn
+      });
+      userFind.id_avatar = uploadResponse.public_id;
+      userFind.avatar_url = uploadResponse.secure_url;
+    }
+
     await userFind.save();
 
     // Tạo token mới
@@ -283,6 +308,8 @@ exports.updateInfor = async (req, res) => {
         address: userFind.address,
         phone_number: userFind.phone_number,
         id: userFind._id,
+        id_avatar: userFind.id_avatar,
+        avatar_url: userFind.avatar_url,
       },
     });
   } catch (err) {

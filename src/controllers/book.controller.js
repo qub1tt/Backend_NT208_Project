@@ -317,8 +317,8 @@ exports.getBookByID = async (req, res) => {
     return;
   }
   try {
-    const encodedID = atob(req.params.id);
-    let result = await book.findById(encodedID);
+    const decodedID = atob(req.params.id);
+    let result = await book.findById(decodedID);
     if (!result) {
       res.status(404).json({ msg: "Not found" });
       return;
@@ -331,4 +331,3 @@ exports.getBookByID = async (req, res) => {
     res.status(500).json({ msg: err });
   }
 };
-

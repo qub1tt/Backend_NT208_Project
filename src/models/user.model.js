@@ -22,6 +22,14 @@ const user = new Schema({
   address: {
     type: String,
   },
+  id_avatar: {
+    type: String,
+    default: " ",
+  },
+  avatar_url: {
+    type: String,
+    default: " ",
+  },
   phone_number: {
     type: String,
   },

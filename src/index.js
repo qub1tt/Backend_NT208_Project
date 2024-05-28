@@ -5,6 +5,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cloudinary = require("./utils/cloudinary");
 const userRouter = require("./routers/user.router");
 const categoryRouter = require("./routers/categoy.router");
 const publisherRouter = require("./routers/publisher.router");
