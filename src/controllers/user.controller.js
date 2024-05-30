@@ -1,4 +1,5 @@
 "use strict";
+
 const user = require("../models/user.model");
 const nodemailer = require("../utils/nodemailer");
 const randomstring = require("randomstring");
@@ -6,7 +7,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const otp = require("../utils/otp");
 const { cloudinary } = require("../utils/cloudinary");
+const { OAuth2Client } = require("google-auth-library");
+const dotenv = require("dotenv");
 
+dotenv.config();
+
+const client = new OAuth2Client(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_SECRET_ID
+);
 exports.register = async (req, res) => {
   try {
     const { email, password, firstName, lastName, address, phone_number } =
@@ -136,6 +145,54 @@ exports.login = async (req, res) => {
     res.status(200).json({
       msg: "Login success",
       token: token,
+      user: {
+        email: userFind.email,
+        firstName: userFind.firstName,
+        lastName: userFind.lastName,
+        address: userFind.address,
+        phone_number: userFind.phone_number,
+        id: userFind._id,
+        id_avatar: userFind.id_avatar,
+        avatar_url: userFind.avatar_url,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
+exports.googleLogin = async (req, res) => {
+  try {
+    const { tokenId } = req.body;
+    if (!tokenId) {
+      return res.status(400).json({ msg: "Token ID is missing" });
+    }
+
+    const ticket = await client.verifyIdToken({
+      idToken: tokenId,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email } = payload;
+
+    let userFind = await user.findOne({ email });
+
+    if (!userFind) {
+      return res.status(422).json({ msg: "Invalid data" });
+    }
+
+    // Create JWT token
+    const token = jwt.sign(
+      { email: email, iat: Math.floor(Date.now() / 1000) - 60 * 30 },
+      "shhhhh"
+    );
+
+    // Return user info and token
+    res.status(200).json({
+      msg: "Login success",
+      token,
       user: {
         email: userFind.email,
         firstName: userFind.firstName,
