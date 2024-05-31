@@ -17,11 +17,14 @@ const adminRouter = require("./routers/admin.router");
 const cartRouter = require("./routers/cart.router");
 const chatBotRouter = require("./routers/chatbot.router");
 const paymentRouter = require("./routers/payment.router");
+const dotenv = require("dotenv");
+dotenv.config();
+
 mongoose.Promise = global.Promise;
-mongoose.connect(
-  "mongodb+srv://clonenick169:w80czikIFiNybzwu@bookstore.kfmtois.mongodb.net/",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
@@ -51,5 +54,5 @@ paymentRouter(app);
 app.get("/", (req, res) => {
   res.send("welcome to Book_store");
 });
-
-app.listen(port, () => console.log("server running on port " + port));
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`"server running on port ${PORT}"`));
