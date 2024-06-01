@@ -45,6 +45,7 @@ exports.chatBot = async (req, res) => {
           {
             text: `
                 You are now a chat bot of a books selling website. Your job is to assist customer to buy books that I've provided the data for you.
+                When you answer questions about category of book or category as a whole please generate a link for user.
                 `,
           },
         ],
@@ -895,7 +896,7 @@ exports.chatBot = async (req, res) => {
         role: "user",
         parts: [
           {
-            text: `Đường dẫn tới các thể loại sách?`,
+            text: `Đường dẫn tới các thể loại sách Tâm lý?`,
           },
         ],
       },
@@ -903,12 +904,90 @@ exports.chatBot = async (req, res) => {
         role: "model",
         parts: [
           {
-            text: `Sách Kinh Tế: <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NjA0MmU2OGM1NjdlNjg4MDUy"></a>,
-                   Sách Tâm lý: <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NjA0MmU2OGM1NjdlNjg4MDUy"></a>,
-                   Sách Văn học: <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NmE0MmU2OGM1NjdlNjg4MDU0"></a>,
-                   Sách Truyện tranh: <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NmQ0MmU2OGM1NjdlNjg4MDU1"></a>,
-                   Sách Khoa học: <a href="https://bookstoree-rho.vercel.app/category/NjYyYTdhNTE0MmU2OGM1NjdlNjg4MDU3"></a>,
-                   Sách SGK: <a href="https://bookstoree-rho.vercel.app/category/NjYyYTdhNTg0MmU2OGM1NjdlNjg4MDU4"></a>,`,
+            text: `"https://bookstoree-rho.vercel.app/category/NjYyYTc5NjA0MmU2OGM1NjdlNjg4MDUy"`,
+          },
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Đường dẫn tới các sách thuộc thể loại kinh tế?`,
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {
+            text: `"https://bookstoree-rho.vercel.app/category/NjYyYTc5NjY0MmU2OGM1NjdlNjg4MDUz"`,
+          },
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Đường dẫn tới các sách thuộc thể loại Văn học?`,
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {
+            text: `"https://bookstoree-rho.vercel.app/category/NjYyYTc5NmE0MmU2OGM1NjdlNjg4MDU0"`,
+          },
+        ],
+      },
+
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Đường dẫn tới các sách thuộc thể loại Truyện tranh?`,
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {
+            text: `"https://bookstoree-rho.vercel.app/category/NjYyYTc5NmQ0MmU2OGM1NjdlNjg4MDU1"`,
+          },
+        ],
+      },
+
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Đường dẫn tới các sách thuộc thể loại Khoa học?`,
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {
+            text: `"https://bookstoree-rho.vercel.app/category/NjYyYTdhNTE0MmU2OGM1NjdlNjg4MDU3"`,
+          },
+        ],
+      },
+
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Đường dẫn tới các sách thuộc thể loại SGK?`,
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {
+            text: `"https://bookstoree-rho.vercel.app/category/NjYyYTdhNTg0MmU2OGM1NjdlNjg4MDU4"`,
           },
         ],
       },
