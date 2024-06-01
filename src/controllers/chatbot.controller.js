@@ -890,6 +890,40 @@ exports.chatBot = async (req, res) => {
           },
         ],
       },
+
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Đường dẫn tới các thể loại sách?`,
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {
+            text: `Sách Kinh Tế: ${(
+              <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NjA0MmU2OGM1NjdlNjg4MDUy"></a>
+            )},
+                   Sách Tâm lý: ${(
+                     <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NjA0MmU2OGM1NjdlNjg4MDUy"></a>
+                   )},
+                   Sách Văn học: ${(
+                     <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NmE0MmU2OGM1NjdlNjg4MDU0"></a>
+                   )},
+                   Sách Truyện tranh: ${(
+                     <a href="https://bookstoree-rho.vercel.app/category/NjYyYTc5NmQ0MmU2OGM1NjdlNjg4MDU1"></a>
+                   )},
+                   Sách Khoa học: ${(
+                     <a href="https://bookstoree-rho.vercel.app/category/NjYyYTdhNTE0MmU2OGM1NjdlNjg4MDU3"></a>
+                   )},
+                   Sách SGK: ${(
+                     <a href="https://bookstoree-rho.vercel.app/category/NjYyYTdhNTg0MmU2OGM1NjdlNjg4MDU4"></a>
+                   )},`,
+          },
+        ],
+      },
     ],
   });
 
