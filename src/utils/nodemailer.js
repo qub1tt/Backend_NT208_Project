@@ -14,7 +14,7 @@ exports.sendEmail = async (email, token) => {
     subject: "Account Verification Token", // Subject line
     text: "Hello my friend",
     html:
-      "<b>verify your account</b>" +
+      "<b>Verify your account</b>" +
       " <br/>" +
       "<span>Please verify your account by clicking the link</span>" +
       "<br/>" +
@@ -60,9 +60,9 @@ exports.sendMailConfirmPayment = async (email, token) => {
     subject: "Payment Verification Token", // Subject line
     text: "Hello my friend",
     html:
-      "<b>verify your account</b>" +
+      "<b>Verify your payment</b>" +
       " <br/>" +
-      "<span>Please verify your account by clicking the link</span>" +
+      "<span>Please verify your payment by clicking the link</span>" +
       "<br/>" +
       "<span>http://localhost:3000/payment/" +
       token +
