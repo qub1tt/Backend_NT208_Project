@@ -119,13 +119,14 @@ exports.updateBook = async (req, res) => {
   bookFind.describe = describe;
   bookFind.category = category;
   bookFind.img = urlImg;
-  bookFind.save((err, docs) => {
-    if (err) {
-      console.log(err);
-    }
-  });
 
-  res.status(200).json({ msg: "success", data: bookFind });
+  try {
+    await bookFind.save();
+    res.status(200).json({ msg: "success", data: bookFind });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: err.message });
+  }
 };
 
 exports.deletebook = async (req, res) => {
