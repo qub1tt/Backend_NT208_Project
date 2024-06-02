@@ -18,7 +18,7 @@ exports.sendEmail = async (email, token) => {
       " <br/>" +
       "<span>Please verify your account by clicking the link</span>" +
       "<br/>" +
-      "<span>http://localhost:3000/confirm/" +
+      `<span>${process.env.PAGE_URL}/confirm/` +
       token +
       "</span>",
   };
@@ -64,7 +64,7 @@ exports.sendMailConfirmPayment = async (email, token) => {
       " <br/>" +
       "<span>Please verify your payment by clicking the link</span>" +
       "<br/>" +
-      "<span>http://localhost:3000/payment/" +
+      `<span>${process.env.PAGE_URL}/payment/` +
       token +
       "</span>",
   };
