@@ -9,7 +9,7 @@
 - NodeJS
 
 ## Hướng dẫn cài đặt:
-Khi deploy ở local vào file .env chỉnh sửa giá trị biến PAGE_URL = "http://localhost:8080"
+Khi deploy ở local vào file .env chỉnh sửa giá trị biến PAGE_URL = "http://localhost:3000"
 1. Cài đặt NodeJS phiên bản mới nhất tại https://nodejs.org/en/download/prebuilt-installer.
 2. Mở terminal clone repo này.
 > git clone https://github.com/qub1tt/Backend_NT208_Project
