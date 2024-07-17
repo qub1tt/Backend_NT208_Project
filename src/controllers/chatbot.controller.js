@@ -2,7 +2,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { HarmBlockThreshold, HarmCategory } = require("@google/generative-ai");
 
 // Access your API key as an environment variable (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI("AIzaSyDWC5eQtCKMF52dV-ifl73zTPOSqCF-FGQ");
+const genAI = new GoogleGenerativeAI("AIzaSyAfSp-zuyu8zhKJap-4_srQCtupAzX_-jU");
 
 exports.chatBot = async (req, res) => {
   const generationConfig = {
